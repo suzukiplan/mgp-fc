@@ -1,4 +1,5 @@
-# ファミコンで始める6502マシン語ゲームプログラミング
+# ファミコンで始める
+# 6502マシン語ゲームプログラミング
 
 本書は、[COSMIC SHOOTER](https://github.com/suzukiplan/stg-for-nes)と[BATTLE MARINE](https://github.com/suzukiplan/battle-marine-fc)の開発で得られた知見をベースに、ファミコンでのゲーム開発方法をなるべく誰でもできるように解説することを目標に書かれたマニュアル（兼、私自身の備忘録）です。
 
