@@ -416,23 +416,23 @@ $2005は上記のように2回連続で store を行う必要があり、1回目
 
 BGは、8x8の矩形を1単位（キャラクタ）として、キャラクタをタイル状に敷き詰めて表示する仕様なので __1画面 = 32x30マス = 256x240px__ となっています。
 
-<img src="images/bg-tiles.png" width=320>
+<img src="images/bg-tiles.png" width=50%>
 
 > ただし、上端8px、下端8px、左端8px、右端8px（図面上の灰色の■の部分）はブラウン管だと表示されないので、実際の __有効可視範囲は 240x224px（30x28マス）__ です。
 
 BGの画面（SCREEN）は4つあり、スクリーン・レイアウトは下図のようになります。
 
-![SCREEN-usage](images/screen-usage.png)
+<img src="images/screen-usage.png" width=50%>
 
 > 標準MAPPERの場合、図面でも示していますが画面4つ中2つはミラーになります。そのため、4画面全てを自由に描画できる訳ではありません。水平ミラーか垂直ミラーのどちらにするかは iNESヘッダーの4byte目の第6bitで指定します。
 
 つまり、内部座標系としては 512x480（64x60マス）の画面領域があり、その中から任意（X: 0~255, Y: 0~255）座標の256x240px が画面への表示対象（Window）となります。そして、$2005でその座標を指定する仕様ということです。
 
-![WINDOW-basic](images/window-basic.png)
+<img src="images/window-basic.png" width=50%>
 
 $2002 (V-SYNC status) で、スプライト番号0の描画タイミングを検出できるので、この仕様を用いることで、「スプライト0描画前のWindow位置」と「スプライト0描画後のWindow位置」を$2005で指定することで、Windowを上下に分割することが可能です。
 
-![WINDOW-advance](images/window-advance.png)
+<img src="images/window-advance.png" width=50%>
 
 そして、Window分割のテクニックを応用することで、「Window2のみスクロールさせる」という部分的なスクロール（ラスタスクロール）を実現できます。
 
