@@ -595,7 +595,7 @@ Windowの解説で先述した通り、ファミコンのBGは32x30マスの画�
 
 例えば、パレットを下記のように定義したとします。
 
-- 00: 赤パレット <FONT COLOR=#000000>■</FONT><FONT COLOR=#400000>■</FONT><FONT COLOR=#800000>■</FONT><FONT COLOR=#FF0000>■</FONT>
+- 00: 赤パレット <SPAN STYLE="COLOR: #000000;">■</SPAN><SPAN STYLE="COLOR: #400000;">■</SPAN><SPAN STYLE="COLOR: #800000;">■</SPAN><SPAN STYLE="COLOR: #D00000;">■</SPAN>
 
 ### パレット
 
