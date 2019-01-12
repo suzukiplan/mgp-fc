@@ -1,6 +1,8 @@
 # 6502マシン語ゲームプログラミング
 
-本書は、[COSMIC SHOOTER](https://github.com/suzukiplan/stg-for-nes)と[BATTLE MARINE](https://github.com/suzukiplan/battle-marine-fc)の開発で得られた知見をベースに、ファミコンでのゲーム開発方法をなるべく誰でもできるように解説することを目標に書かれたマニュアル（兼、私自身の備忘録）です。
+本書は、[COSMIC SHOOTER](https://github.com/suzukiplan/stg-for-nes)と[BATTLE MARINE](https://github.com/suzukiplan/battle-marine-fc)の開発で得られた知見をベースに、ファミコンでのゲーム開発方法を現代のプログラマが理解できるように解説したマニュアルです。
+
+> 基本的な内容を細かく説明してしまうと文書量が無駄に多くなってしまうので、目安として情報処理技術者試験のLv2（基本情報処理技術者試験）合格程度の知識レベルを前提に解説します。
 
 ## Agenda
 
