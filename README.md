@@ -1,6 +1,6 @@
 # 6502マシン語ゲームプログラミング
 
-昨年（2018年）末少し長めの年末年始休暇を頂き、特に用事もなかったので暇つぶしにファミコンゲームの開発方法を独学で学んで[COSMIC SHOOTER](https://github.com/suzukiplan/stg-for-nes)と[BATTLE MARINE](https://github.com/suzukiplan/battle-marine-fc)という２本のゲームを開発したのですが、その過程で得られた知見をベースに、ファミコンゲームのプログラミング技法を現代のプログラマが理解できるよう、可能な限り体系的な解説を試みたドキュメントです。
+昨年（2018年）末少し長めの年末年始休暇を頂き、特に用事もなかったので暇つぶしにファミコンゲームの開発方法を独学で学んで[COSMIC SHOOTER](https://github.com/suzukiplan/stg-for-nes)と[BATTLE MARINE](https://github.com/suzukiplan/battle-marine-fc)という２本のゲームを開発したのですが、その過程で得られた知見をベースに、ファミコンゲームのプログラミング技法を現代のプログラマが理解できるよう、可能な限り体系的な解説をしてみようと思います。
 
 本書を読むことで、プログラマなら誰でもファミコン用ゲームを開発できるようになることを目指しています。
 
