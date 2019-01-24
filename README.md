@@ -35,6 +35,7 @@
 - (8) メモリマップ（VRAM）
 - (9) スプライト
 - (10) APU
+- (11) コントローラ
 
 # 基礎編
 
@@ -958,6 +959,82 @@ CPU = 1.789773MHz
 以下URLで詳しく解説されているので、使いたい方はそちらを参照してください。
 
 [https://wiki.nesdev.com/w/index.php/APU_DMC](https://wiki.nesdev.com/w/index.php/APU_DMC)
+
+## (11) コントローラ
+
+ファミコンには標準で2プレイヤ分のジョイパッド（コントローラ）が付いており、$4016番地(1P側) と $4017番地(2P側) へのstore / loadによりそれらの入力状態を取得することができます。
+
+なお、日本の初代ファミコン、NEWファミコン（AV仕様のファミコン）と海外のNESでは若干の使用差がある点に注意が必要です。
+
+- 初代ファミコン: 2P側のみマイク入力がありselect/startが無い
+- NES: 1P/2P同じ仕様
+- NEWファミコン: NES仕様に準拠
+
+つまり、2Pを扱う場合は動作対象のエミュレータが「初代ファミコン・エミュレータ」なのか「NESエミュレータ」or「NEWファミコン」なのかを意識して実装しなければなりません。現代のゲームプログラマが2Pを対象にしたゲームをデザインする場合、ファミコンとNESの共通項の範囲で扱うのが妥当だと考えられます。
+
+### usage
+
+```
+    ; 読み取りのための前準備
+    LDA #$01
+    STA $4016
+    LDA #$00
+    STA $4016
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_a
+    ; 1PのAボタンを押した時の処理
+end_push_a:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_b
+    ; 1PのBボタンを押した時の処理
+end_push_b:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_select
+    ; 1PのSELECTボタンを押した時の処理
+end_push_select:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_start
+    ; 1PのSTARTボタンを押した時の処理
+end_push_start:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_up
+    ; 1Pの上ボタンを押した時の処理
+end_push_up:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_down
+    ; 1Pの下ボタンを押した時の処理
+end_push_down:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_left
+    ; 1Pの左ボタンを押した時の処理
+end_push_left:
+
+    LDA $4016
+    AND #$01
+    BEQ end_push_right
+    ; 1Pの右ボタンを押した時の処理
+end_push_right:
+```
+
+コントローラの状態を読み取りを始める前に、$4016のLSB (最下位bit) に1/0の順でstoreを行います。
+
+> 1をstoreするとボタン読み取り位置が先頭に戻され、0をstoreすると読み取りの都度、ボタン位置がシフトしていく形になります。
+
+その後、$4016をloadするとLSBに A, B, SELECT, START, UP, DOWN, LEFT, RIGHT の順番で1Pのボタンの入力状態が返ります。（2Pのコントローラの状態を知りたい場合は$4017をloadします）
 
 # あとがき
 
