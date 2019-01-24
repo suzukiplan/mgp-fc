@@ -159,6 +159,105 @@ pc以外のレジスタは全て8bitで、pcのみ16bitです。
 
 > 6502のプログラミングでは、原則全ての変数をグローバル変数で管理することになるイメージでOKです。ローカル変数を持つこともできますが、6502にはスタック領域が256バイトしかないので、ローカル変数を使おうものなら、一瞬でスタックオーバーフローしてしまいます。
 
+load にはレジスタに読み込むメモリの指定方式として 即値（immediate）, アドレス（zero page / absolute / indirect）による指定方式があります。storeはアドレス指定のみできます。
+
+
+#### immediate (load)
+
+[cc65](https://cc65.github.io/) の場合、数値の前に `#` を付けることで即値表現になります。
+
+```
+;   assembly          C形式
+    LDA #123        ; a = 123;
+    LDA #$AB        ; a = 0xAB;
+    LDA #%10101010  ; a = 0b10101010;
+```
+
+#### address (load / store)
+
+##### zero page
+
+6502は、メモリの $0000〜$00FF 番地の256バイトの領域（ゼロページ）へのアクセス速度が他のアドレス（$0100〜$FFFF 番地）よりも1サイクル速くフェッチできるようになっています。
+
+```
+;   assembly          C形式
+    ; load
+    LDA $00         ; a = memory[0x0000];
+    LDA $10, x      ; a = memory[0x0010 + x];
+    LDX $20         ; x = memory[0x0020];
+    LDX $30, y      ; x = memory[0x0030 + y];
+    LDY $40         ; y = memory[0x0040];
+    LDY $50, x      ; y = memory[0x0050 + x];
+    ; store
+    STA $00         ; memory[0x0000] = a;
+    STA $10, x      ; memory[0x0010 + x] = a;
+    STX $20         ; memory[0x0020] = x;
+    STX $30, y      ; memory[0x0030 + y] = x;
+    STY $40         ; memory[0x0040] = y;
+    STY $50, x      ; memory[0x0050 + x] = y;
+```
+
+上記例の $00, $20, $40 のようにアドレス値をそのまま指定する方式だけでなく、$10, $30, $50 のようにインデックス（x/y）を添え字として指定することも可能です。
+
+ただし、aの添字にyを使った場合、absolute扱いになります。
+
+##### absolute
+
+ゼロページとはアクセス先アドレスが異なるだけで基本的には同じですが、先述のようにaの添字としてyを使うことができる点も異なります（以下の例の $0320 への load / store）。
+
+```
+;   assembly          C形式
+    ; load
+    LDA $0300       ; a = memory[0x0300];
+    LDA $0310, x    ; a = memory[0x0310 + x];
+    LDA $0320, y    ; a = memory[0x0320 + y];
+    LDX $0330       ; x = memory[0x0330];
+    LDX $0340, y    ; x = memory[0x0340 + y];
+    LDY $0350       ; y = memory[0x0350];
+    LDY $0360, x    ; y = memory[0x0360 + x];
+    ; store
+    STA $0300       ; memory[0x0300] = a;
+    STA $0310, x    ; memory[0x0310 + x] = a;
+    STA $0320, y    ; memory[0x0310 + y] = a;
+    STX $0330       ; memory[0x0330] = x;
+    STX $0340, y    ; memory[0x0340 + y] = x;
+    STY $0350       ; memory[0x0350] = y;
+    STY $0360, x    ; memory[0x0360 + x] = y;
+```
+
+##### indirect
+
+特殊な load / store のアドレス指定方式として indirect と呼ばれるものがあります。
+
+```
+    LDA ($00, x)   ; ex1
+    STA ($10, x)   ; ex2
+    LDA ($20), y   ; ex3
+    STA ($30), y   ; ex4
+```
+
+indirectとは、特定のゼロページアドレスに格納されている値（リトルエンディアンの2バイト）が示す番地に格納された値を load / store する方法です。
+
+ex1をCスタイルで書くと以下のようになります。
+
+```c
+    // ex1: LDA ($00, x) in C
+    unsigned short addr;
+    addr = memory[0x00 + x];
+    addr += memory[0x00 + x + 1] * 256;
+    a = memory[addr]; // ex2なら: memory[addr] = a;
+```
+
+また、ex3をCスタイルで書くと以下のようになります。
+
+```c
+    // ex3: LDA ($20), y in C
+    unsigned short addr;
+    addr = memory[0x20];
+    addr += memory[0x20 + 1] * 256;
+    a = memory[addr + y]; // ex4なら: memory[addr + y] = a;
+```
+
 ### レジスタ間の値の転送（transfer）
 
 aとx、aとyは相互に値を転送することができます。
