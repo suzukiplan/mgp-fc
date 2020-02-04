@@ -618,7 +618,7 @@ usage:
 
 <img src="images/scan-line-4x3-1blank.png"/>
 
-ファミコンは、スキャンライン240本（各256px）、vBlankが16本という画面構成になっています。そして、スキャンライン描画中（vBlank描画期間外）にPPUメモリ（VRAM+OAM）の更新を行うと描画内容に乱れが生じる仕様なので、vBlank描画タイミングをチェックするために V を参照します。
+ファミコンは、スキャンライン242本（各256px）、vBlankが20本という画面構成になっています。そして、スキャンライン描画中（vBlank描画期間外）にPPUメモリ（VRAM+OAM）の更新を行うと描画内容に乱れが生じる仕様なので、vBlank描画タイミングをチェックするために V を参照します。
 
 <img src="images/scan-line-nes.png" width=50%/>
 
