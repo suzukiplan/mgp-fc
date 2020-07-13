@@ -328,11 +328,11 @@ x/yを一時記憶したい場合、以下の例のようにa経由でpush/pull�
 ```
     ; assembly        C形式
     TXA             ; a = x
-    PHA             ; stack[s++] = a
+    PHA             ; stack[s--] = a
 
     ~~~ xを用いた処理を実行 ~~~
 
-    PLA             ; a = stack[--s];
+    PLA             ; a = stack[++s];
     TAX             ; x = a
 ```
 
